@@ -1,0 +1,6 @@
+flask
+firebase-admin
+python-dotenv
+cloudinary
+flask-login
+gunicorn

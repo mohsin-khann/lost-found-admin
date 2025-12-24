@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% block title %}Matches{% endblock %}
+
+{% block content %}
+<h4><i class="bi bi-link-45deg me-2"></i> Successful Matches</h4>
+
+<div class="card mt-4">
+  <div class="card-header bg-success text-white">
+    <h5 class="mb-0">Lost ↔ Found Pairs</h5>
+  </div>
+
+  <div class="card-body">
+
+    <!-- 🔍 Search bar -->
+    <form method="get" action="{{ url_for('routes.matches') }}" class="mb-4">
+      <div class="input-group shadow-sm rounded">
+        <span class="input-group-text bg-white border-end-0">
+          <i class="bi bi-search text-muted"></i>
+        </span>
+        <input type="text" name="q" class="form-control border-start-0"
+               placeholder="Search matches…" value="{{ search_query }}">
+        <button class="btn btn-outline-primary" type="submit">Search</button>
+      </div>
+    </form>
+
+    {% if matches %}
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Lost Item</th>
+            <th>Found Item</th>
+            <th>Similarity</th>
+            <th>When</th>
+          </tr>
+        </thead>
+       <tbody>
+{% for m in matches %}
+  <tr>
+    <td>{{ loop.index }}</td>
+
+    <!-- Lost side -->
+    <td>
+      <div class="d-flex align-items-start">
+        {% if m.lost.imageUrl %}
+          <img src="{{ m.lost.imageUrl }}"
+               alt="Lost image"
+               class="img-thumbnail me-2"
+               style="width: 80px; height: 80px; object-fit: cover;">
+        {% endif %}
+        <div>
+          <strong>{{ m.lost.item }}</strong><br>
+          <small class="text-muted">{{ m.lost.location }}</small><br>
+          <small>{{ m.lost.description }}</small><br>
+          <span class="badge bg-secondary mt-1">
+            {{ m.lost.name or 'Unknown' }}
+          </span>
+          {% if m.lost.contact %}
+  <!-- <div><i class="bi bi-telephone"></i> {{ m.lost.contact }}</div> -->
+  <!-- <a href="tel:{{ m.lost.contact }}">{{ m.lost.contact }}</a> -->
+  <a href="tel:{{ m.lost.contact }}" class="text-decoration-none">
+  <i class="bi bi-telephone me-1"></i>{{ m.lost.contact }}
+</a>
+{% endif %}
+        </div>
+      </div>
+    </td>
+
+    <!-- Found side -->
+    <td>
+      <div class="d-flex align-items-start">
+        {% if m.found.imageUrl %}
+          <img src="{{ m.found.imageUrl }}"
+               alt="Found image"
+               class="img-thumbnail me-2"
+               style="width: 80px; height: 80px; object-fit: cover;">
+        {% endif %}
+        <div>
+          <strong>{{ m.found.item }}</strong><br>
+          <small class="text-muted">{{ m.found.location }}</small><br>
+          <small>{{ m.found.description }}</small><br>
+          <span class="badge bg-secondary mt-1">
+            {{ m.found.name or 'Unknown' }}
+          </span>
+          {% if m.found.contact %}
+  <!-- <a href="tel:{{ m.found.contact }}">{{ m.found.contact }}</a> -->
+  <a href="tel:{{ m.found.contact }}" class="text-decoration-none">
+  <i class="bi bi-telephone me-1"></i>{{ m.found.contact }}
+</a>
+{% endif %}
+        </div>
+      </div>
+    </td>
+
+    <td><span class="badge bg-info">{{ m.score }}</span></td>
+    <td>{{ m.created.strftime('%Y-%m-%d') }}</td>
+  </tr>
+{% endfor %}
+</tbody>
+
+      </table>
+    </div>
+    {% else %}
+      <p class="text-muted">No matches found.</p>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

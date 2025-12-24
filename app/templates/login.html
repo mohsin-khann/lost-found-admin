@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Admin Login{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Blur sidebar only on login page */
+    .sidebar {
+        filter: blur(3px);
+        pointer-events: none;
+        user-select: none;
+        opacity: 0.9;
+    }
+
+    .login-note {
+        font-size: 14px;
+        color: #555;
+        margin-bottom: 15px;
+    }
+
+    .login-contact {
+        font-size: 13px;
+        color: #666;
+        margin-top: 15px;
+        text-align: center;
+    }
+
+    .login-contact a {
+        color: #0d6efd;
+        text-decoration: none;
+    }
+
+    .login-contact a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6 col-lg-5">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">
+                    <i class="bi bi-lock me-2"></i> Admin Login
+                </h4>
+            </div>
+
+            <div class="card-body">
+                <p class="login-note">
+                    <strong>Restricted Access.</strong><br>
+                    This panel is intended for authorized administrators only.
+                </p>
+
+                <form method="POST" action="{{ url_for('routes.login') }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                    <div class="mb-3">
+                        <label class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" name="password" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-box-arrow-in-right me-2"></i> Login
+                    </button>
+                </form>
+
+                <div class="login-contact">
+                    Demo access on request:<br>
+                    <a href="mailto:mohsin.codes1@gmail.com">
+                        mohsin.codes1@gmail.com
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

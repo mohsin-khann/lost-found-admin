@@ -1,0 +1,98 @@
+/* Custom Styles */
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.sidebar {
+    min-height: 100vh;
+    box-shadow: 3px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card {
+    border-radius: 10px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border: none;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+.card-users {
+    background: linear-gradient(45deg, #29d720, #2c3e50);
+}
+
+.card-lost {
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+}
+
+.card-found {
+    background: linear-gradient(45deg, #f39c12, #d35400);
+}
+
+.card-matches {
+    background: linear-gradient(45deg, #2ecc71, #27ae60);
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(52, 152, 219, 0.05);
+}
+
+/* Nav link hover effect */
+.nav-link {
+    transition: all 0.3s;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.nav-link:hover:not(.active) {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.nav-link.active {
+    background-color: rgba(255, 255, 255, 0.2);
+    font-weight: 600;
+}
+
+/* Card header styles */
+.card-header {
+    font-weight: 600;
+}
+
+/* Progress bar for matches */
+.progress {
+    border-radius: 10px;
+    overflow: visible;
+}
+
+.progress-bar {
+    border-radius: 10px;
+    position: relative;
+}
+
+.progress-bar::after {
+    content: attr(aria-valuenow) '%';
+    position: absolute;
+    right: 10px;
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+}
+/* New search styles */
+.search-highlight {
+    background-color: #fff9c4;
+    font-weight: bold;
+}
+
+.search-info-card {
+    border-left: 4px solid #0d6efd;
+}
+
+.global-search-card {
+    background: linear-gradient(to right, #e3f2fd, #bbdefb);
+    border: 1px solid #bbdefb;
+}

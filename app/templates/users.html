@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}User Management{% endblock %}
+
+{% block content %}
+<h4><i class="bi bi-people me-2"></i> User Management</h4>
+
+<div class="card mt-4">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Registered Users</h5>
+    </div>
+    <div class="card-body">
+      <!--starting here here-->
+      <form method="get" action="{{ url_for('routes.users') }}" class="mb-4">
+  <div class="input-group shadow-sm rounded">
+    <span class="input-group-text bg-white border-end-0">
+      <i class="bi bi-search text-muted"></i>
+    </span>
+    <input type="text" name="q" class="form-control border-start-0"
+           placeholder="Search users by email or UID..."
+           value="{{ search_query }}"
+           style="box-shadow: none;">
+    <button class="btn btn-outline-primary" type="submit">
+      Search
+    </button>
+  </div>
+</form>
+      <!--ending here-->
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Email</th>
+                        <th>Created</th>
+                        <th>Last Login</th>
+                        <th>Status</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>{{ user.uid }}...</td>
+                        <td>{{ user.email }}</td>
+                        <td>{{ user.created.strftime('%Y-%m-%d') if user.created else 'N/A' }}</td>
+                        <td>{{ user.last_login.strftime('%Y-%m-%d') if user.last_login else 'Never' }}</td>
+                        <td>
+              <span class="badge bg-{{ 'success' if not user.disabled else 'danger' }}">
+                {{ 'Active' if not user.disabled else 'Disabled' }}
+              </span>
+            </td>
+
+            <!-- ───── ACTION BUTTON ───── -->
+            <td class="text-end">
+              <form method="post"
+                    action="{{ url_for('admin.toggle_user', uid=user.uid) }}"
+                    class="d-inline">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">   <!-- ← add this -->
+                <input type="hidden" name="disabled"
+                       value="{{ 'true' if not user.disabled else 'false' }}">
+
+                <button type="submit"
+                        class="btn btn-sm btn-{{ 'danger' if not user.disabled else 'success' }}">
+                  <i class="bi bi-{{ 'person-x' if not user.disabled else 'person-check' }}"></i>
+                  {{ 'Disable' if not user.disabled else 'Enable' }}
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+
+
+
